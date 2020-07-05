@@ -1,10 +1,12 @@
 # PWA: Offline Budget Tracker
-![Screenshot of offline-budget-tracker by dvorakjt]("./public/screenshots/standalone-app.png")
+![Screenshot of offline-budget-tracker by dvorakjt]("/public/screenshots/app-in-use.png")  
+
 This repo contains a refactor of an existing full-stack application. It was completed as a homework assignment for the Penn LPS Full-stack web development bootcamp. My task was to transform the application into a progressive web app (PWA) that could function both online and offline. The app is also installable. A link to the deployed version can be found [here.](https://obscure-peak-69005.herokuapp.com/)
 ## Table of Contents
 
 [Introduction](#introduction)  
 [Installation](#installation)  
+[The Code](#the-code)
 [Usage](#usage)  
 [Contributing](#contributing)  
 [About the Author](#about-the-author)  
@@ -30,17 +32,17 @@ The files I added included: ./public/service-worker.js, ./public/srcJs/activateD
 
 ### ./public/srcJs  
 
-The files in the srcJs directory are used by webpack to construct the bundle.js file. Originally, I was using one file to create and modify records within objectStores within IndexedDb, but this proved problematic to bundle, so I chunked it into smaller pieces, and then imported them into the index2.js file before bundling them.   
+The files in the srcJs directory are used by webpack to construct the bundle.js file. Originally, I was using one file to create and modify records within objectStores inside IndexedDb, but this proved problematic to bundle, so I chunked it into smaller pieces, and then imported them into the index2.js file before bundling them.   
 
-#### ./public/srcJs/activateDb.js  
+#### activateDb.js  
 
-This file exports a function that opems a database called "budgetTracker" within IndexedDb and creates an object store, called "pendingTransactions", within said db. The function returns a promise, and resolves with the db that was created. The file is also dependent upon the readDatabase.js file within the same directory.  
+This file exports a function that opens a database called "budgetTracker" within IndexedDb and creates an object store, called "pendingTransactions", within said db. The function returns a promise, and resolves with the db that was created. The file is also dependent upon the readDatabase.js file within the same directory.  
 
-#### ./public/srcJs/readDatabase.js  
+#### readDatabase.js  
 
 This file exports a function that reads all records in the db, and if there is at least one, it makes a post request to the api. Once the post request is successful, all records in the object store are cleared. This file is used both in the activateDb.js when the application is first started, and as part of an event listener in the index2.js file which calls this function anytime the app is brought back online. 
 
-#### ./public/srcJs/recordTransaction.js
+#### recordTransaction.js
 
 This file exports a function that takes two parameters: the data to add to a database, and the db to add it to. In index2.js, immediately after importing these three files, an anonymous, self-invoking async function is called which does three things: 
 -calls activateDb to open the Db
