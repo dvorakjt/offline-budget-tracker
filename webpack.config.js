@@ -3,12 +3,12 @@ const WebpackPwaManifest = require("webpack-pwa-manifest");
 const path = require("path");
 
 const config = {
-    entry: "./public/srcJs/src.js",
+    entry: "./public/srcJs/index2.js",
     output: {
         path: __dirname + "/public/dist",
         filename: "bundle.js"
     },
-    mode: "production",
+    mode: "development",
     plugins: [
         new WebpackPwaManifest({
             filename: "manifest.json",

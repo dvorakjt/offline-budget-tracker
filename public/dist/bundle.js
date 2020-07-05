@@ -1,1 +1,137 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t,n){"use strict";n.r(t);n(1),n(2)},function(e,t){let n;const r=indexedDB.open("budgetTracker",1);r.onupgradeneeded=e=>{e.target.result.createObjectStore("pendingTransactions",{autoIncrement:!0})},r.onsuccess=e=>{n=e.target.result,navigator.onLine&&o()},r.onerror=e=>{console.log("Error: "+e.target.errorCode)};const o=()=>{const e=n.transaction(["pendingTransactions"],"readwrite").objectStore("pendingTransactions").getAll();e.onsuccess=()=>{e.result.length>0&&fetch("/api/transaction/bulk",{method:"POST",body:JSON.stringify(e.result),headers:{accept:"application/json, text/plain, */*","Content-Type":"application/json"}}).then(e=>e.json()).then(()=>{n.transaction(["pendingTransactions"],"readwrite").objectStore("pendingTransactions").clear()})}};window.addEventListener("online",o)},function(e,t){let n,r=[];function o(){let e=r.reduce((e,t)=>e+parseInt(t.value),0);document.querySelector("#total").textContent=e}function a(){let e=document.querySelector("#tbody");e.innerHTML="",r.forEach(t=>{let n=document.createElement("tr");n.innerHTML=`\n      <td>${t.name}</td>\n      <td>${t.value}</td>\n    `,e.appendChild(n)})}function c(){let e=r.slice().reverse(),t=0,o=e.map(e=>{let t=new Date(e.date);return`${t.getMonth()+1}/${t.getDate()}/${t.getFullYear()}`}),a=e.map(e=>(t+=parseInt(e.value),t));n&&n.destroy();let c=document.getElementById("myChart").getContext("2d");n=new Chart(c,{type:"line",data:{labels:o,datasets:[{label:"Total Over Time",fill:!0,backgroundColor:"#6666ff",data:a}]}})}function i(e){let t=document.querySelector("#t-name"),n=document.querySelector("#t-amount"),i=document.querySelector(".form .error");if(""===t.value||""===n.value)return void(i.textContent="Missing Information");i.textContent="";let u={name:t.value,value:n.value,date:(new Date).toISOString()};e||(u.value*=-1),r.unshift(u),c(),a(),o(),fetch("/api/transaction",{method:"POST",body:JSON.stringify(u),headers:{Accept:"application/json, text/plain, */*","Content-Type":"application/json"}}).then(e=>e.json()).then(e=>{e.errors?i.textContent="Missing Information":(t.value="",n.value="")}).catch(e=>{recordTransaction(u),t.value="",n.value=""})}fetch("/api/transaction").then(e=>e.json()).then(e=>{r=e,o(),a(),c()}),document.querySelector("#add-btn").onclick=function(){i(!0)},document.querySelector("#sub-btn").onclick=function(){i(!1)}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./public/srcJs/index2.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./public/srcJs/activateDb.js":
+/*!************************************!*\
+  !*** ./public/srcJs/activateDb.js ***!
+  \************************************/
+/*! exports provided: activateDb */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"activateDb\", function() { return activateDb; });\n/* harmony import */ var _readDatabase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./readDatabase */ \"./public/srcJs/readDatabase.js\");\n\r\n\r\nfunction activateDb() {\r\n    return new Promise((resolve, reject) => {\r\n        //create a variable to represent indexed db\r\n        let indxDb;\r\n\r\n        //open the database\r\n        const request = indexedDB.open(\"budgetTracker\", 1);\r\n\r\n        // when the application is first opened or the version changes, create the object store\r\n        request.onupgradeneeded = event => {\r\n            const indxDb = event.target.result;\r\n            indxDb.createObjectStore(\"pendingTransactions\", { autoIncrement: true });\r\n        }\r\n\r\n        //when the db is successfully opened, check if online, and if so, read from db\r\n        request.onsuccess = event => {\r\n            indxDb = event.target.result;\r\n            if (navigator.onLine) {\r\n                Object(_readDatabase__WEBPACK_IMPORTED_MODULE_0__[\"readDatabase\"])(indxDb);\r\n                resolve(indxDb);\r\n            }\r\n            else {\r\n                resolve(indxDb);\r\n            }\r\n        }\r\n\r\n        //if there is an error, log it\r\n        request.onerror = event => {\r\n            reject(`${event.target.errorCode}`);\r\n        }\r\n\r\n    });\r\n}\n\n//# sourceURL=webpack:///./public/srcJs/activateDb.js?");
+
+/***/ }),
+
+/***/ "./public/srcJs/index2.js":
+/*!********************************!*\
+  !*** ./public/srcJs/index2.js ***!
+  \********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _activateDb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activateDb */ \"./public/srcJs/activateDb.js\");\n/* harmony import */ var _readDatabase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./readDatabase */ \"./public/srcJs/readDatabase.js\");\n/* harmony import */ var _recordDbTransaction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./recordDbTransaction */ \"./public/srcJs/recordDbTransaction.js\");\n\n\n\n\n//create a placeholder for the indexedDb\nlet db;\n\n//anonymous self-activating async function which opens the indexDb and adds an eventListener to the window to read from the db when back online\n(async () => {\n    db = await Object(_activateDb__WEBPACK_IMPORTED_MODULE_0__[\"activateDb\"])();\n    console.log(db);\n    window.addEventListener(\"online\", () => { Object(_readDatabase__WEBPACK_IMPORTED_MODULE_1__[\"readDatabase\"])(db) });\n})();\n\nlet transactions = [];\nlet myChart;\n\nfetch(\"/api/transaction\")\n    .then(response => {\n        return response.json();\n    })\n    .then(data => {\n        // save db data on global variable\n        transactions = data;\n\n        populateTotal();\n        populateTable();\n        populateChart();\n    });\n\nfunction populateTotal() {\n    // reduce transaction amounts to a single total value\n    let total = transactions.reduce((total, t) => {\n        return total + parseInt(t.value);\n    }, 0);\n\n    let totalEl = document.querySelector(\"#total\");\n    totalEl.textContent = total;\n}\n\nfunction populateTable() {\n    let tbody = document.querySelector(\"#tbody\");\n    tbody.innerHTML = \"\";\n\n    transactions.forEach(transaction => {\n        // create and populate a table row\n        let tr = document.createElement(\"tr\");\n        tr.innerHTML = `\n      <td>${transaction.name}</td>\n      <td>${transaction.value}</td>\n    `;\n\n        tbody.appendChild(tr);\n    });\n}\n\nfunction populateChart() {\n    // copy array and reverse it\n    let reversed = transactions.slice().reverse();\n    let sum = 0;\n\n    // create date labels for chart\n    let labels = reversed.map(t => {\n        let date = new Date(t.date);\n        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;\n    });\n\n    // create incremental values for chart\n    let data = reversed.map(t => {\n        sum += parseInt(t.value);\n        return sum;\n    });\n\n    // remove old chart if it exists\n    if (myChart) {\n        myChart.destroy();\n    }\n\n    let ctx = document.getElementById(\"myChart\").getContext(\"2d\");\n\n    myChart = new Chart(ctx, {\n        type: 'line',\n        data: {\n            labels,\n            datasets: [{\n                label: \"Total Over Time\",\n                fill: true,\n                backgroundColor: \"#6666ff\",\n                data\n            }]\n        }\n    });\n}\n\nfunction sendTransaction(isAdding) {\n    let nameEl = document.querySelector(\"#t-name\");\n    let amountEl = document.querySelector(\"#t-amount\");\n    let errorEl = document.querySelector(\".form .error\");\n\n    // validate form\n    if (nameEl.value === \"\" || amountEl.value === \"\") {\n        errorEl.textContent = \"Missing Information\";\n        return;\n    }\n    else {\n        errorEl.textContent = \"\";\n    }\n\n    // create record\n    let transaction = {\n        name: nameEl.value,\n        value: amountEl.value,\n        date: new Date().toISOString()\n    };\n\n    // if subtracting funds, convert amount to negative number\n    if (!isAdding) {\n        transaction.value *= -1;\n    }\n\n    // add to beginning of current array of data\n    transactions.unshift(transaction);\n\n    // re-run logic to populate ui with new record\n    populateChart();\n    populateTable();\n    populateTotal();\n\n    // also send to server\n    fetch(\"/api/transaction\", {\n        method: \"POST\",\n        body: JSON.stringify(transaction),\n        headers: {\n            Accept: \"application/json, text/plain, */*\",\n            \"Content-Type\": \"application/json\"\n        }\n    })\n        .then(response => {\n            return response.json();\n        })\n        .then(data => {\n            if (data.errors) {\n                errorEl.textContent = \"Missing Information\";\n            }\n            else {\n                // clear form\n                nameEl.value = \"\";\n                amountEl.value = \"\";\n            }\n        })\n        .catch(err => {\n            // fetch failed, so save in indexed db\n            Object(_recordDbTransaction__WEBPACK_IMPORTED_MODULE_2__[\"recordTransaction\"])(transaction, db);\n\n            // clear form\n            nameEl.value = \"\";\n            amountEl.value = \"\";\n        });\n}\n\ndocument.querySelector(\"#add-btn\").onclick = function () {\n    sendTransaction(true);\n};\n\ndocument.querySelector(\"#sub-btn\").onclick = function () {\n    sendTransaction(false);\n};\n\n\n//# sourceURL=webpack:///./public/srcJs/index2.js?");
+
+/***/ }),
+
+/***/ "./public/srcJs/readDatabase.js":
+/*!**************************************!*\
+  !*** ./public/srcJs/readDatabase.js ***!
+  \**************************************/
+/*! exports provided: readDatabase */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"readDatabase\", function() { return readDatabase; });\nfunction readDatabase(db) {\r\n    //open a new transaction\r\n    const transaction = db.transaction([\"pendingTransactions\"], \"readwrite\");\r\n    const store = transaction.objectStore(\"pendingTransactions\");\r\n    const allRecords = store.getAll();\r\n\r\n    allRecords.onsuccess = () => {\r\n        //if there is at least one record in the db, make a post request to the api to update it\r\n        if (allRecords.result.length > 0) {\r\n            fetch(\"/api/transaction/bulk\", {\r\n                method: \"POST\",\r\n                body: JSON.stringify(allRecords.result),\r\n                headers: {\r\n                    accept: \"application/json, text/plain, */*\",\r\n                    \"Content-Type\": \"application/json\"\r\n                }\r\n            }).then(response => response.json())\r\n                .then(() => {\r\n                    //now clear all items from the pendingTransactions list after they have been added to the mongoDB\r\n                    const transaction = db.transaction([\"pendingTransactions\"], \"readwrite\");\r\n                    const store = transaction.objectStore(\"pendingTransactions\");\r\n                    store.clear();\r\n                });\r\n        }\r\n    }\r\n}\n\n//# sourceURL=webpack:///./public/srcJs/readDatabase.js?");
+
+/***/ }),
+
+/***/ "./public/srcJs/recordDbTransaction.js":
+/*!*********************************************!*\
+  !*** ./public/srcJs/recordDbTransaction.js ***!
+  \*********************************************/
+/*! exports provided: recordTransaction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"recordTransaction\", function() { return recordTransaction; });\nfunction recordTransaction(data, db) {\r\n    //create a new transaction\r\n    const transaction = db.transaction([\"pendingTransactions\"], \"readwrite\");\r\n    //open the object store\r\n    const store = transaction.objectStore(\"pendingTransactions\");\r\n    //add the data\r\n    store.add(data);\r\n}\n\n//# sourceURL=webpack:///./public/srcJs/recordDbTransaction.js?");
+
+/***/ })
+
+/******/ });
