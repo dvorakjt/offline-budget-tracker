@@ -1,5 +1,5 @@
 # PWA: Offline Budget Tracker
-![Screenshot of offline-budget-tracker by dvorakjt]("public/screenshots/app-in-use.png")  
+![Screenshot of offline-budget-tracker by dvorakjt]("./public/screenshots/app-in-use.png")  
 
 This repo contains a refactor of an existing full-stack application. It was completed as a homework assignment for the Penn LPS Full-stack web development bootcamp. My task was to transform the application into a progressive web app (PWA) that could function both online and offline. The app is also installable. A link to the deployed version can be found [here.](https://obscure-peak-69005.herokuapp.com/)
 ## Table of Contents
@@ -64,7 +64,7 @@ index2.js imports the 3 above files, and also begins with an anonymous self-invo
 The service-worker.js file is relatively boiler-plate. The only change necessary was to the list of files to be cached.
 
 ## Usage
-![Usage Image]("public/screenshots/online-offline.gif")
+![Usage Image]("/public/screenshots/online-offline.gif")
 
 To use the app, navigate to the deployed application, or your installed application. If you wish to simulate an offline experience, go to the network tab in developer tools and select "offline." You should still be able to submit new budget items, and these will be added to the mongoDB once the app is back online. I did notice that occasionally, the data-cache (while online) sometimes requires an extra refresh or two to be generated.
 
