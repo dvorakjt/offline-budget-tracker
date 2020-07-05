@@ -64,7 +64,7 @@ index2.js imports the 3 above files, and also begins with an anonymous self-invo
 The service-worker.js file is relatively boiler-plate. The only change necessary was to the list of files to be cached.
 
 ## Usage
-![Usage Image]("/public/screenshots/online-offline.gif")
+![Usage Image]("../online-offline.gif")
 
 To use the app, navigate to the deployed application, or your installed application. If you wish to simulate an offline experience, go to the network tab in developer tools and select "offline." You should still be able to submit new budget items, and these will be added to the mongoDB once the app is back online. I did notice that occasionally, the data-cache (while online) sometimes requires an extra refresh or two to be generated.
 
