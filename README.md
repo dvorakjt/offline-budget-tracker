@@ -6,7 +6,7 @@ This repo contains a refactor of an existing full-stack application. It was comp
 
 [Introduction](#introduction)  
 [Installation](#installation)  
-[The Code](#the-code)
+[The Code](#the-code)  
 [Usage](#usage)  
 [Contributing](#contributing)  
 [About the Author](#about-the-author)  
@@ -15,7 +15,12 @@ This repo contains a refactor of an existing full-stack application. It was comp
 
 ![GitHub language count](https://img.shields.io/github/languages/count/dvorakjt/offline-budget-tracker) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dvorakjt/offline-budget-tracker) ![GitHub repo size](https://img.shields.io/github/repo-size/dvorakjt/offline-budget-tracker)
 
-All of the front-end and back-end code needed to run the app online was provided by the Penn LPS Bootcamp/Trilogy education service. As such, there were three main tasks I worked on in order to transform the app into a PWA that could run offline and could be installed to a device. These were: 1. Adding a service-worker file to cache requests to the server and their responses, and then respond with cached data when the app is offline. 2. Adding a file to create a database within indexed db, open an objectstore within it, save records to it, and read it when the app is back online. This proved to require more than one file due to my attempts to use webpack (more on that later). 3. Creating a manifest file so that the app is installable. Additionally, I wound up using webpack-pwa-manifest to generate the manifest file, as well as to create a bundle.js file. This required some revision of the indexedDb file. I had to chunk it into several different components so that they could then be imported into the index2.js file, which was then used by webpack to create the bundle.js file.
+All of the front-end and back-end code needed to run the app online was provided by the Penn LPS Bootcamp/Trilogy education service. As such, there were three main tasks I worked on in order to transform the app into a PWA that could run offline and could be installed to a device. These were: 
+1. Adding a service-worker file to cache requests to the server and their responses, and then respond with cached data when the app is offline.  
+2. Adding a file to create a database within indexed db, open an objectstore within it, save records to it, and read it when the app is back online. This proved to require more than one file due to my attempts to use webpack (more on that later). 
+3. Creating a manifest file so that the app is installable.   
+
+Additionally, I wound up using webpack-pwa-manifest to generate the manifest file, as well as to create a bundle.js file. This required some revision of the indexedDb file. I had to chunk it into several different components so that they could then be imported into the index2.js file, which was then used by webpack to create the bundle.js file.
 
 ## Installation
 ![Installation Image ]("./public/screenshots/standalone-app.png")
@@ -44,10 +49,10 @@ This file exports a function that reads all records in the db, and if there is a
 
 #### recordTransaction.js
 
-This file exports a function that takes two parameters: the data to add to a database, and the db to add it to. In index2.js, immediately after importing these three files, an anonymous, self-invoking async function is called which does three things: 
--calls activateDb to open the Db
--sets the value of db (previously declared as a let) equal to the db that was opened
--adds an eventlistener to the DOM using this value.
+This file exports a function that takes two parameters: the data to add to a database, and the db to add it to. In index2.js, immediately after importing these three files, an anonymous, self-invoking async function is called which does three things:  
+- calls activateDb to open the Db  
+- sets the value of db (previously declared as a let) equal to the db that was opened  
+- adds an eventlistener to the DOM using this value.  
 The value of db is then used later in the index2.js file to call recordTransaction when a post request to the server is unsuccessful.
 
 #### Modifications to the Index.js file
