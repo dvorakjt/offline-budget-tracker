@@ -9,7 +9,8 @@
   <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
-
+  <!--Link to the manifest-->
+  <link rel="manifest" href="./dist/manifest.json">
   <title>Budget Tracker</title>
 </head>
 
@@ -43,13 +44,13 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script src="./indexedDb.js"></script>
-  <script src="index.js"></script>
+  <script src="./dist/bundle.js"></script>
+  <!--connect to the service worker-->
   <script type="text/javascript">
     (function () {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("./service-worker.js", { scope: "/" })
-          .then(() => console.log("Service Worker registered successfully."))
+          .then(() => console.log("Service Worker registered"))
           .catch(error => console.log("Service Worker registration failed:", error));
       }
     })();
