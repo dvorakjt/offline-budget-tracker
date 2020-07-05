@@ -1,5 +1,5 @@
 # PWA: Offline Budget Tracker
-![Screenshot of offline-budget-tracker by dvorakjt]("./public/screenshots/app-in-use.png")  
+![Screenshot of offline-budget-tracker by dvorakjt]("app-in-use.png")  
 
 This repo contains a refactor of an existing full-stack application. It was completed as a homework assignment for the Penn LPS Full-stack web development bootcamp. My task was to transform the application into a progressive web app (PWA) that could function both online and offline. The app is also installable. A link to the deployed version can be found [here.](https://obscure-peak-69005.herokuapp.com/)
 ## Table of Contents
@@ -23,7 +23,7 @@ All of the front-end and back-end code needed to run the app online was provided
 Additionally, I wound up using webpack-pwa-manifest to generate the manifest file, as well as to create a bundle.js file. This required some revision of the indexedDb file. I had to chunk it into several different components so that they could then be imported into the index2.js file, which was then used by webpack to create the bundle.js file.
 
 ## Installation
-![Installation Image ]("public/screenshots/standalone-app.png")
+![Installation Image ]("./standalone-app.png")
 
 To install the app, click the plus sign to the right of the url.
 
